@@ -1,0 +1,5 @@
+(library
+ (name calculatrice)
+ (public_name calculatrice)
+ (modules lexer eval types)
+ (libraries str))   

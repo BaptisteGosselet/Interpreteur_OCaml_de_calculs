@@ -1,5 +1,3 @@
-(* lexer.ml *)
-open Str
 open Types
 
 let morphemsRegexDelimiters = "\\([0-9]+\\(\\.[0-9]+\\)?\\|[()+\\-*/]\\)"

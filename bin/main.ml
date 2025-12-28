@@ -1,11 +1,11 @@
-(* main.ml *)
-open Types
-open Lexer
-open Eval
 
+open Calculatrice.Lexer
+
+(*
 let readUserInput () : string =
   print_endline "Entrer une expression : ";
   read_line ()
+*) 
 
 let () =
   let s = "3+2" in (*todo: spaces*)
