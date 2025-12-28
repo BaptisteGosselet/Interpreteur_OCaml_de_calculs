@@ -24,23 +24,27 @@ let parseTokens (tokens : token list) : expr =
     let (u, rest) = parse_unary tokens in
     (FactorUnary u, rest)
   
-  and parse_term (tokens : token list) : (term * token list) =
-    let (f, rest) = parse_factor tokens in
+and parse_term (tokens : token list) : (term * token list) =
+  let (f, rest) = parse_factor tokens in
+  
+  let rec parse_term_rest (left : term) (tokens : token list) : (term * token list) =
+    match tokens with
+    | TFois :: rest' ->
+        let (f, rest'') = parse_factor rest' in
+        parse_term_rest (MulOp (left, MUL, f)) rest''
     
-    let rec parse_term_rest (left : term) (tokens : token list) : (term * token list) =
-      match tokens with
-      | TFois :: rest' ->
-          let (f, rest'') = parse_factor rest' in
-          parse_term_rest (MulOp (left, MUL, f)) rest''
-      
-      | TDiv :: rest' ->
-          let (f, rest'') = parse_factor rest' in
-          parse_term_rest (MulOp (left, DIV, f)) rest''
-      
-      | _ ->
-          (left, tokens)
-    in
-    parse_term_rest (TermFactor f) rest
+    | TDiv :: rest' ->
+        let (f, rest'') = parse_factor rest' in
+        parse_term_rest (MulOp (left, DIV, f)) rest''
+    
+    | TParG :: _ | TNombre _ :: _ ->
+        let (f, rest'') = parse_factor tokens in
+        parse_term_rest (MulOp (left, MUL, f)) rest''
+    
+    | _ ->
+        (left, tokens)
+  in
+  parse_term_rest (TermFactor f) rest
   
   and parse_expr (tokens : token list) : (expr * token list) = 
     let (t, rest) = parse_term tokens in
