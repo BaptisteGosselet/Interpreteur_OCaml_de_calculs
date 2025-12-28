@@ -5,12 +5,15 @@ open Calculatrice.Parser
 
 
 let readUserInput () : string =
-  print_endline "Entrer une expression : ";
+  print_endline "Entrer une expression ('q' pour quitter): ";
   read_line ()
 
-let doACalculation () : unit = 
-  let s = (readUserInput ()) in 
-  print_float (eval (parseTokens (tokenize s)))
+let rec doACalculation () =
+  let s = readUserInput () in
+  let result = eval (parseTokens (tokenize s)) in
+  Printf.printf "> %.15g\n%!" result;
+  doACalculation ()
+
 
 let () =
   doACalculation ()

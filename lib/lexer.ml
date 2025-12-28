@@ -36,7 +36,6 @@ let tokenize (s : string) : token list =
   let lst = splitMorphems s in
   List.rev (
     List.fold_left (fun acc e ->
-      (* Ignore les espaces *)
       let trimmed = String.trim e in
       if trimmed = "" then acc
       else
@@ -50,6 +49,7 @@ let tokenize (s : string) : token list =
              | "-" -> TMoins :: acc
              | "*" -> TFois :: acc
              | "/" -> TDiv :: acc
+             | "q" -> exit 0
              | _ -> failwith ("Token non reconnu : '" ^ trimmed ^ "'"))
     ) [] lst
   )
