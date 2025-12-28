@@ -10,7 +10,7 @@ let readUserInput () : string =
 *) 
 
 let () =
-  let s = "3+2" in (*todo: spaces*)
+  let s = "-4*(-3+2)" in (*todo: spaces*)
   print_float (eval (parseTokens (tokenize s)))
 
   (* Ici, il faudra ajouter constructExpr pour créer l'arbre *)
